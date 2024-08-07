@@ -1,9 +1,13 @@
 import {
   AppModuleTable,
+  CompanyTable,
   FeatureModuleTable,
-} from "@/entities/core/app-module-entity";
+  UserTable,
+} from "@/entities";
 
 export interface DatabaseTable {
   appModules: AppModuleTable;
   featureModules: FeatureModuleTable;
+  users: UserTable;
+  companies: CompanyTable;
 }

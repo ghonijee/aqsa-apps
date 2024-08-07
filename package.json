@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@types/pg": "^8.11.6",
+    "bcrypt-ts": "^5.0.2",
     "kysely": "^0.27.4",
     "next": "14.2.5",
     "pg": "^8.12.0",
