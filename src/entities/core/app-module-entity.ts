@@ -2,21 +2,21 @@ export interface AppModuleTable {
   id?: number;
   name: string;
   defaultUrl: string;
-  created_at: Date;
+  createdAt: Date;
 }
 
 export type AppModule = Omit<AppModuleTable, "id">;
 export type NewAppModule = Omit<AppModuleTable, "id" | "created_at">;
 export type AppModuleWithFeatureModules = AppModule & {
-  featureModules: FeatureModule[];
+  featureModules: FeatureModule[] | null;
 };
 
 export interface FeatureModuleTable {
-  id?: string;
+  id?: number;
   name: string;
   defaultUrl: string;
   appModuleId: number;
-  created_at: Date;
+  createdAt: Date;
 }
 
 export type FeatureModule = Omit<FeatureModuleTable, "id">;

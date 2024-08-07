@@ -1,6 +1,7 @@
 import { CamelCasePlugin, Kysely, PostgresDialect } from "kysely";
 import { Pool } from "pg";
 import { DatabaseTable } from "./types";
+import { container } from "tsyringe";
 
 export const pgDialect = new PostgresDialect({
   pool: new Pool({
@@ -16,3 +17,7 @@ export const db = new Kysely<DatabaseTable>({
   dialect: pgDialect,
   plugins: [new CamelCasePlugin()],
 });
+
+export type DatabaseConnection = Kysely<DatabaseTable>;
+
+container.registerInstance<DatabaseConnection>("DatabaseConnection", db);

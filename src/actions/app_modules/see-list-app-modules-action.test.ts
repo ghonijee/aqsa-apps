@@ -1,7 +1,7 @@
 import { GetListAppModulesParams } from "@/entities/core/app-module-entity";
 import { container } from "tsyringe";
 import seeListAppModulesAction from "./see-list-app-modules-action";
-import AppModuleRepository from "../../repositories/core/AppModuleRepository";
+import AppModuleRepository from "../../repositories/core/app-module-repository";
 
 describe("See list app modules action", () => {
   const appModuleRepository: AppModuleRepository = {} as AppModuleRepository;

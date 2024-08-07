@@ -2,7 +2,7 @@ import {
   GetListAppModulesParams,
   ListAppModulesResult,
 } from "@/entities/core/app-module-entity";
-import AppModuleRepository from "@/repositories/core/AppModuleRepository";
+import AppModuleRepository from "@/repositories/core/app-module-repository";
 import { container } from "tsyringe";
 
 export default function seeListAppModulesAction(
