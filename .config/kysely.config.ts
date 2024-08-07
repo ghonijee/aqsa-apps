@@ -1,9 +1,3 @@
-import {
-  DummyDriver,
-  PostgresAdapter,
-  PostgresIntrospector,
-  PostgresQueryCompiler,
-} from "kysely";
 import { defineConfig, getKnexTimestampPrefix } from "kysely-ctl";
 import { db } from "../src/lib/database/db";
 
