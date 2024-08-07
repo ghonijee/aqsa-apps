@@ -78,9 +78,9 @@ const config: Config = {
         },
       },
       textColor: ({ colors }) => ({
-        base: colors.neutral[900],
+        "color-base": colors.neutral[900],
         secondary: colors.neutral[700],
-        muted: colors.neutral[600],
+        muted: "#6F7C8E",
         active: "#3348FF",
         warning: "#DB6E00",
         success: "#00A81C",
