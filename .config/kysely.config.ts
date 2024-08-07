@@ -1,3 +1,4 @@
+import "reflect-metadata";
 import { defineConfig, getKnexTimestampPrefix } from "kysely-ctl";
 import { db } from "../src/lib/database/db";
 
