@@ -1,25 +1,28 @@
+import { ReactNode } from "react";
+
 export interface AppModuleTable {
   id?: number;
   name: string;
   defaultUrl: string;
-  createdAt: Date;
+  createdAt?: Date;
 }
 
-export type AppModule = Omit<AppModuleTable, "id">;
+export type AppModule = AppModuleTable;
 export type NewAppModule = Omit<AppModuleTable, "id" | "created_at">;
 export type AppModuleWithFeatureModules = AppModule & {
-  featureModules: FeatureModule[] | null;
+  featureModules: (FeatureModule & { icon: string })[] | null;
+  icon: ReactNode;
 };
 
 export interface FeatureModuleTable {
   id?: number;
   name: string;
   defaultUrl: string;
-  appModuleId: number;
-  createdAt: Date;
+  appModuleId?: number;
+  createdAt?: Date;
 }
 
-export type FeatureModule = Omit<FeatureModuleTable, "id">;
+export type FeatureModule = FeatureModuleTable;
 export type NewFeatureModule = Omit<FeatureModuleTable, "id" | "created_at">;
 
 export type GetListAppModulesParams = {
