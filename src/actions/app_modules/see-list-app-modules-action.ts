@@ -1,13 +1,12 @@
-import {
-  GetListAppModulesParams,
-  ListAppModulesResult,
-} from "@/entities/core/app-module-entity";
-import AppModuleRepository from "@/repositories/core/app-module-repository";
-import { container } from "tsyringe";
+// import {
+//   GetListAppModulesParams,
+//   ListAppModulesResult,
+// } from "@/entities/core/app-module-entity";
+// import AppModuleRepository from "@/repositories/core/app-module-repository";
 
-export default function seeListAppModulesAction(
-  params: GetListAppModulesParams
-): PromiseLike<ListAppModulesResult> {
-  const repository = container.resolve(AppModuleRepository);
-  return repository.findMany(params);
-}
+// export default function seeListAppModulesAction(
+//   params: GetListAppModulesParams
+// ): PromiseLike<ListAppModulesResult> {
+//   const repository =
+//   return repository.findMany(params);
+// }

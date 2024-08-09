@@ -24,7 +24,7 @@ export default function MainMenu({ menus }: Readonly<MainMenuProps>) {
   const { onSelect } = useAppModuleStore();
 
   return (
-    <div className="w-20 bg-darkblue h-screen flex flex-col justify-start items-center gap-y-4 pt-4">
+    <div className="w-20 bg-darkblue flex flex-col justify-start items-center gap-y-4 pt-4">
       {menus.map((appModule) => {
         const isActive =
           (activeModule == "" && appModule.defaultUrl === "/") ||

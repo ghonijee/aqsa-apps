@@ -2,6 +2,7 @@ import {
   AppModuleTable,
   CompanyTable,
   FeatureModuleTable,
+  UserCompanyTable,
   UserTable,
 } from "@/entities";
 
@@ -10,4 +11,5 @@ export interface DatabaseTable {
   featureModules: FeatureModuleTable;
   users: UserTable;
   companies: CompanyTable;
+  userCompanies: UserCompanyTable;
 }

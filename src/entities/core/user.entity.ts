@@ -1,3 +1,5 @@
+import { Company } from "./company.entity";
+
 export interface UserTable {
   id?: number | undefined;
   name: string;
@@ -10,7 +12,12 @@ export interface UserTable {
 }
 
 export type User = UserTable;
-export type NewUser = Omit<UserTable, "id" | "created_at">;
+export type NewUser = Omit<UserTable, "id" | "createdAt">;
+
+export type UserSession = Omit<
+  UserTable,
+  "password" | "isActive" | "createdAt"
+> & { companies: Company[] };
 
 export type ListUserResult = {
   data: User[];
@@ -22,6 +29,6 @@ export type GetListUsersParams = {
   pageSize: number;
   search?: string;
   isActive?: boolean;
-  orderBy?: "name" | "email" | "username" | "created_at";
+  orderBy?: "name" | "email" | "username" | "createdAt";
   orderDir?: "asc" | "desc";
 };

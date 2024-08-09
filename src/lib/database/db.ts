@@ -1,10 +1,9 @@
-import { CamelCasePlugin, Kysely, PostgresDialect } from "kysely";
-import { Pool } from "pg";
+import { CamelCasePlugin, Kysely, MysqlDialect } from "kysely";
 import { DatabaseTable } from "./types";
-import { container } from "tsyringe";
+import { createPool } from "mysql2";
 
-export const pgDialect = new PostgresDialect({
-  pool: new Pool({
+export const dbDialect = new MysqlDialect({
+  pool: createPool({
     database: process.env.DB_DATABASE,
     host: process.env.DB_HOST,
     password: process.env.DB_PASSWORD,
@@ -14,10 +13,8 @@ export const pgDialect = new PostgresDialect({
 });
 
 export const db = new Kysely<DatabaseTable>({
-  dialect: pgDialect,
+  dialect: dbDialect,
   plugins: [new CamelCasePlugin()],
 });
 
 export type DatabaseConnection = Kysely<DatabaseTable>;
-
-container.registerInstance<DatabaseConnection>("DatabaseConnection", db);

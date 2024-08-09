@@ -20,9 +20,5 @@ export async function seed(db: Kysely<any>): Promise<void> {
     },
   ];
 
-  await db
-    .insertInto("users")
-    .values(users)
-    .onConflict((oc) => oc.doNothing())
-    .execute();
+  await db.insertInto("users").values(users).execute();
 }
