@@ -36,14 +36,14 @@ export default function SubMenu({
   }
 
   return (
-    <div className="w-60 h-screen bg-secondary px-4 py-6">
+    <div className="w-60 bg-[#F6F7F9] px-4 py-6">
       {/* Company swicth */}
 
       {/* Feature list */}
       <div>
-        <div className="px-4 flex flex-row gap-x-4 justify-start items-center mb-5">
-          <span className="text-muted">{selected.icon}</span>
-          <div className=" text-muted font-medium text-base">
+        <div className="px-2 flex flex-row justify-start items-center mb-5">
+          {/* <span className="text-active">{selected.icon}</span> */}
+          <div className=" text-muted font-semibold text-base">
             {selected.name}
           </div>
         </div>
@@ -63,17 +63,18 @@ export default function SubMenu({
                   key={featureModule.name}
                   className={cn(
                     "text-sm text-secondary px-4 py-2 font-normal flex gap-x-4",
-                    isActive && " bg-primary-200-alpha rounded-lg"
+                    isActive && " bg-primary-200-alpha text-active rounded-lg"
                   )}
                 >
-                  <Image
-                    src={featureModule.icon}
+                  {featureModule.icon}
+                  {/* <Image
+                    src={featureModule.icon!}
                     alt={featureModule.name}
                     width={20}
                     height={20}
                     loading="lazy"
                     className={isActive ? "text-active" : "text-secondary"}
-                  />
+                  /> */}
 
                   {featureModule.name}
                 </div>

@@ -3,7 +3,7 @@ import { sql, type Kysely } from "kysely";
 export async function up(db: Kysely<any>): Promise<void> {
   await db.schema
     .createTable("app_modules")
-    .addColumn("id", "bigserial", (c) => c.primaryKey().notNull())
+    .addColumn("id", "bigint", (c) => c.primaryKey().autoIncrement().notNull())
     .addColumn("name", "varchar(255)", (c) => c.notNull())
     .addColumn("defaultUrl", "varchar(255)", (c) => c.notNull())
     .addColumn("created_at", "timestamp", (c) => c.defaultTo(sql`now()`))
@@ -11,7 +11,7 @@ export async function up(db: Kysely<any>): Promise<void> {
 
   await db.schema
     .createTable("feature_modules")
-    .addColumn("id", "bigserial", (c) => c.primaryKey().notNull())
+    .addColumn("id", "bigint", (c) => c.primaryKey().autoIncrement().notNull())
     .addColumn("name", "varchar(255)", (c) => c.notNull())
     .addColumn("defaultUrl", "varchar(255)", (c) => c.notNull())
     .addColumn("app_module_id", "bigint", (c) => c.notNull())

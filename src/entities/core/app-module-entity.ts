@@ -10,8 +10,8 @@ export interface AppModuleTable {
 export type AppModule = AppModuleTable;
 export type NewAppModule = Omit<AppModuleTable, "id" | "created_at">;
 export type AppModuleWithFeatureModules = AppModule & {
-  featureModules: (FeatureModule & { icon: string })[] | null;
-  icon: ReactNode;
+  featureModules: (FeatureModule & { icon?: string | any })[] | null;
+  icon?: ReactNode;
 };
 
 export interface FeatureModuleTable {
