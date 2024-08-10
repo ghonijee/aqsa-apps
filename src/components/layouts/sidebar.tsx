@@ -27,6 +27,11 @@ const appModules: AppModuleWithFeatureModules[] = [
         defaultUrl: "/",
         icon: <Icon name="house" size={20} />,
       },
+      {
+        name: "Chart of Account",
+        defaultUrl: "/chart-of-accounts",
+        icon: <Icon name="credit-card" size={20} />,
+      },
     ],
   },
   {

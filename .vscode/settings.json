@@ -1,3 +1,5 @@
 {
-    "editor.tabSize": 2
+    "editor.tabSize": 2,
+    "editor.fontSize": 12,
+    "window.zoomLevel": -0.75,    
 }

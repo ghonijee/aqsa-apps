@@ -13,6 +13,7 @@ const config: Config = {
         black: "#000000",
         white: "#FFFFFF",
         darkblue: "#122187",
+        secondary: "#F6F7F9",
         "neutral-100-alpha": "rgba(0, 0, 0, 0.08)",
         "neutral-200-alpha": "rgba(0, 0, 0, 0.16)",
         "neutral-300-alpha": "rgba(0, 0, 0, 0.22)",
@@ -78,7 +79,7 @@ const config: Config = {
         },
       },
       textColor: ({ colors }) => ({
-        "color-base": colors.neutral[900],
+        "color-base": "#14181F",
         secondary: colors.neutral[700],
         muted: "#6F7C8E",
         active: "#3348FF",
@@ -91,9 +92,9 @@ const config: Config = {
       }),
       backgroundColor: ({ colors }) => ({
         base: colors.white,
-        secondary: colors.neutral[50],
+        secondary: "#F6F7F9",
         overlay: colors.white,
-        lower: colors.neutral[50],
+        lower: "#F6F7F9",
       }),
       borderColor: ({ colors }) => ({
         base: colors.neutral[200],

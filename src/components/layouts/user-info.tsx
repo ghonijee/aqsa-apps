@@ -23,7 +23,6 @@ import {
 } from "../ui/dropdown-menu";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 
 interface UserInfoProps {
   company: string;
@@ -36,6 +35,7 @@ export default function UserInfo({ company, data, user }: UserInfoProps) {
 
   let companySelected;
   const { selected, onSelect } = useCompanyStore();
+  console.log("selected", selected);
 
   if (!selected) {
     companySelected = data.find((c) => c.code === company);

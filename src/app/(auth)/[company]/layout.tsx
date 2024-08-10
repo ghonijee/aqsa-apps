@@ -1,5 +1,14 @@
 import Sidebar from "@/components/layouts/sidebar";
 import TopBar from "@/components/layouts/topbar";
+import { headers } from "next/headers";
+
+export const metadata = {
+  title: {
+    template: " %s | AQSA APPS",
+    default: "AQSA APPS",
+    absolute: "AQSA APPS",
+  },
+};
 
 export default function AppLayout({
   children,
@@ -15,10 +24,7 @@ export default function AppLayout({
           <Sidebar company={params.company} />
 
           {/* Content */}
-          <div className="w-full bg-base">
-            <TopBar company={params.company} />
-            {children}
-          </div>
+          <div className="w-full bg-base text-color-base">{children}</div>
         </div>
       </div>
     </>
