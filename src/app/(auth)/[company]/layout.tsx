@@ -19,13 +19,11 @@ export default function AppLayout({
 }) {
   return (
     <>
-      <div className="flex flex-col h-screen max-h-screen">
-        <div className="flex h-full">
-          <Sidebar company={params.company} />
+      <div className="flex h-screen max-h-screen min-h-screen">
+        <Sidebar company={params.company} />
 
-          {/* Content */}
-          <div className="w-full bg-base text-color-base">{children}</div>
-        </div>
+        {/* Content */}
+        <div className="w-full bg-base text-color-base">{children}</div>
       </div>
     </>
   );

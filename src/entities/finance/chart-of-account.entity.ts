@@ -1,3 +1,4 @@
+import { z } from "zod";
 import { PaginationParams, PaginationResult } from "../core";
 
 export interface ChartOfAccountTable {
@@ -6,7 +7,7 @@ export interface ChartOfAccountTable {
   companyId: number;
   name: string;
   code: string;
-  type: string;
+  type?: string | null;
   isActive?: boolean | null;
   isManageable?: boolean | null;
   createdAt?: Date;
@@ -42,9 +43,7 @@ export enum ChartOfAccountType {
   Expense = "Expense",
 }
 
-export const ChartOfAccountOptions = Object.values(ChartOfAccountType).filter(
-  (value) => value !== ChartOfAccountType.View
-);
+export const ChartOfAccountOptions = Object.values(ChartOfAccountType);
 
 export type ListChartOfAccountsResult = PaginationResult<ChartOfAccount>;
 

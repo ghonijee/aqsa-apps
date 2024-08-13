@@ -1,11 +1,11 @@
-"use client";
+import { ChartOfAccountWithLevel } from "@/entities";
+import NewAccountDialog from "./components/new-account-dialog";
 
-import MultiSelectDropdown from "@/components/filter/multi-select-dropdown";
-import SearchInput from "@/components/filter/search-input";
-import { Button } from "@/components/ui/button";
-import { ChartOfAccountOptions } from "@/entities";
-
-export default function FilterAction() {
+export default function FilterAction({
+  accounts,
+}: {
+  accounts: ChartOfAccountWithLevel[];
+}) {
   return (
     <div className="flex space-x-5 justify-start">
       {/* Filters */}
@@ -30,9 +30,7 @@ export default function FilterAction() {
       </div> */}
       {/* Actions */}
       <div>
-        <Button className="w-full" size={"sm"}>
-          New Accounts
-        </Button>
+        <NewAccountDialog accounts={accounts} />
       </div>
     </div>
   );

@@ -1,11 +1,5 @@
 import { AppModuleWithFeatureModules } from "@/entities";
-import {
-  House,
-  Landmark,
-  LayoutDashboard,
-  Settings,
-  Wallet2Icon,
-} from "lucide-react";
+import { LayoutDashboard, Settings, Wallet2Icon } from "lucide-react";
 import MainMenu from "./main-menu";
 import SubMenu from "./sub-menu";
 import Icon from "../ui/icon";
@@ -59,7 +53,6 @@ export default function Sidebar({ company }: { company: string }) {
       {/* modules list */}
       <MainMenu menus={appModules} />
       {/* feature list */}
-      <SubMenu menus={appModules} />
     </div>
   );
 }

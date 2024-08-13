@@ -15,7 +15,7 @@ export const dbDialect = new MysqlDialect({
 export const db = new Kysely<DatabaseTable>({
   dialect: dbDialect,
   plugins: [new CamelCasePlugin()],
-  log: ["query", "error"],
+  // log: ["query", "error"],
 });
 
 export type DatabaseConnection = Kysely<DatabaseTable>;

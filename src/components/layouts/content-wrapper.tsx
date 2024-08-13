@@ -10,9 +10,9 @@ export default function ContentWrapper({
   children: React.ReactNode;
 }) {
   return (
-    <div className="w-full bg-base text-color-base">
+    <div className="flex flex-col w-full bg-base text-color-base h-screen">
       <TopBar company={company} titlePage={titlePage} />
-      {children}
+      <main className="flex overflow-y-auto w-full mb-10">{children}</main>
     </div>
   );
 }
