@@ -23,7 +23,6 @@ import {
 } from "../ui/dropdown-menu";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 
 interface UserInfoProps {
   company: string;

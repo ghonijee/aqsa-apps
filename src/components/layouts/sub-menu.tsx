@@ -8,32 +8,20 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 export default function SubMenu({
-  menus,
-  company,
+  module,
 }: {
-  menus: AppModuleWithFeatureModules[];
-  company?: string;
+  module?: AppModuleWithFeatureModules;
 }) {
-  const { selected, onSelect } = useAppModuleStore();
   const pathname = usePathname().split("/");
-  const companyName = company || pathname[1];
-  const moduleName = pathname[2] || "";
   const featureName = pathname[3] || "";
 
-  if (!selected) {
-    const selectedModuleIndex = menus.findIndex(
-      (appModule) => appModule.defaultUrl === `/${moduleName}`
-    );
-    onSelect(menus[selectedModuleIndex]);
-  }
-
-  if (
-    !selected ||
-    selected.featureModules === null ||
-    selected.featureModules.length === 0
-  ) {
-    return null;
-  }
+  // if (
+  //   !selected ||
+  //   selected.featureModules === null ||
+  //   selected.featureModules.length === 0
+  // ) {
+  //   return null;
+  // }
 
   return (
     <div className="w-60 bg-[#F6F7F9] px-4 py-6">
@@ -44,21 +32,19 @@ export default function SubMenu({
         <div className="px-2 flex flex-row justify-start items-center mb-5">
           {/* <span className="text-active">{selected.icon}</span> */}
           <div className=" text-muted font-semibold text-base">
-            {selected.name}
+            {module?.name}
           </div>
         </div>
         <div className="flex flex-col gap-y-2">
-          {selected.featureModules.map((featureModule) => {
+          {module?.featureModules?.map((featureModule) => {
             const isActive =
               (featureName == "" && featureModule.defaultUrl === "/") ||
               (featureName !== "" &&
                 featureModule.defaultUrl.startsWith(`/${featureName}`));
-
+            pathname[3] = featureModule.defaultUrl.substring(1);
+            const hrefUrl = pathname.join("/");
             return (
-              <Link
-                href={`/${companyName}/${moduleName}${featureModule.defaultUrl}`}
-                key={featureModule.name}
-              >
+              <Link href={`${hrefUrl}`} key={featureModule.name}>
                 <div
                   key={featureModule.name}
                   className={cn(
@@ -67,15 +53,6 @@ export default function SubMenu({
                   )}
                 >
                   {featureModule.icon}
-                  {/* <Image
-                    src={featureModule.icon!}
-                    alt={featureModule.name}
-                    width={20}
-                    height={20}
-                    loading="lazy"
-                    className={isActive ? "text-active" : "text-secondary"}
-                  /> */}
-
                   {featureModule.name}
                 </div>
               </Link>

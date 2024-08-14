@@ -18,6 +18,15 @@ export class CompanyRepository {
 
     return companies;
   }
+  async findByCompanyCode(code: string): Promise<Company | null> {
+    const companies = await this.db
+      .selectFrom("companies")
+      .selectAll()
+      .where("companies.code", "=", code)
+      .executeTakeFirst();
+
+    return companies ?? null;
+  }
 }
 
 export const companyRepository = new CompanyRepository(db);

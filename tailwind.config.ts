@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+const { fontFamily } = require("tailwindcss/defaultTheme");
 
 const config: Config = {
   content: [
@@ -7,12 +8,20 @@ const config: Config = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    container: {
+      center: true,
+      padding: "2rem",
+      screens: {
+        "2xl": "1400px",
+      },
+    },
     extend: {
       colors: {
         transparent: "transparent",
         black: "#000000",
         white: "#FFFFFF",
         darkblue: "#122187",
+        secondary: "#F6F7F9",
         "neutral-100-alpha": "rgba(0, 0, 0, 0.08)",
         "neutral-200-alpha": "rgba(0, 0, 0, 0.16)",
         "neutral-300-alpha": "rgba(0, 0, 0, 0.22)",
@@ -23,6 +32,7 @@ const config: Config = {
           0: "#FFFFFF",
         },
         primary: {
+          DEFAULT: "hsl(var(--primary))",
           100: "#F0F7FF",
           200: "#E0EDFF",
           300: "#CCE0FF",
@@ -76,9 +86,34 @@ const config: Config = {
           600: "#009E9E",
           700: "#09726B",
         },
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
+        },
+        muted: {
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
+        },
+        accent: {
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
+        },
+        popover: {
+          DEFAULT: "hsl(var(--popover))",
+          foreground: "hsl(var(--popover-foreground))",
+        },
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
+        },
       },
       textColor: ({ colors }) => ({
-        "color-base": colors.neutral[900],
+        "color-base": "#14181F",
         secondary: colors.neutral[700],
         muted: "#6F7C8E",
         active: "#3348FF",
@@ -91,9 +126,9 @@ const config: Config = {
       }),
       backgroundColor: ({ colors }) => ({
         base: colors.white,
-        secondary: colors.neutral[50],
+        secondary: "#F6F7F9",
         overlay: colors.white,
-        lower: colors.neutral[50],
+        lower: "#F6F7F9",
       }),
       borderColor: ({ colors }) => ({
         base: colors.neutral[200],
@@ -108,6 +143,23 @@ const config: Config = {
         invert: colors.white,
         intense: colors.neutral[400],
       }),
+      fontFamily: {
+        sans: ["var(--font-sans)", ...fontFamily.sans],
+      },
+      keyframes: {
+        "accordion-down": {
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
+        },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
+        },
+      },
+      animation: {
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
+      },
     },
   },
   plugins: [],

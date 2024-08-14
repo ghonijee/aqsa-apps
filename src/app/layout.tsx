@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { Toaster } from "@/components/ui/toaster";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -15,7 +16,10 @@ export default function RootLayout({
 }>) {
   return (
     <html>
-      <body className={inter.className + " overscroll-none"}>{children}</body>
+      <body className={inter.className + " overscroll-none"}>
+        {children}
+        <Toaster />
+      </body>
     </html>
   );
 }

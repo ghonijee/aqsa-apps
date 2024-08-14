@@ -1,11 +1,5 @@
 import { AppModuleWithFeatureModules } from "@/entities";
-import {
-  House,
-  Landmark,
-  LayoutDashboard,
-  Settings,
-  Wallet2Icon,
-} from "lucide-react";
+import { LayoutDashboard, Settings, Wallet2Icon } from "lucide-react";
 import MainMenu from "./main-menu";
 import SubMenu from "./sub-menu";
 import Icon from "../ui/icon";
@@ -26,6 +20,11 @@ const appModules: AppModuleWithFeatureModules[] = [
         name: "Home",
         defaultUrl: "/",
         icon: <Icon name="house" size={20} />,
+      },
+      {
+        name: "Chart of Account",
+        defaultUrl: "/chart-of-accounts",
+        icon: <Icon name="credit-card" size={20} />,
       },
     ],
   },
@@ -54,7 +53,6 @@ export default function Sidebar({ company }: { company: string }) {
       {/* modules list */}
       <MainMenu menus={appModules} />
       {/* feature list */}
-      <SubMenu menus={appModules} />
     </div>
   );
 }

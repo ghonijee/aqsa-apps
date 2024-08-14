@@ -1,5 +1,7 @@
 import {
+  AccountMutationTable,
   AppModuleTable,
+  ChartOfAccountTable,
   CompanyTable,
   FeatureModuleTable,
   UserCompanyTable,
@@ -12,4 +14,6 @@ export interface DatabaseTable {
   users: UserTable;
   companies: CompanyTable;
   userCompanies: UserCompanyTable;
+  chartOfAccounts: ChartOfAccountTable;
+  accountMutations: AccountMutationTable;
 }
