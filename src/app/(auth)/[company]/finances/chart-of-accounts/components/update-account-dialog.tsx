@@ -14,19 +14,19 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   ChartOfAccountType,
   ChartOfAccountWithLevel,
 } from "../../../../../../entities/finance/chart-of-account.entity";
-import { createChartOfAccountAction } from "@/actions/chart_of_account/chart-of-account.action";
-import { newAccountSchema } from "@/schemas/chart-of-account.schema";
+import { updateChartOfAccountAction } from "@/actions/chart_of_account/chart-of-account.action";
+import { updateAccountSchema } from "@/schemas/chart-of-account.schema";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast";
-import { UseFormReturn } from "react-hook-form";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -46,36 +46,59 @@ import {
 } from "@/components/ui/popover";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { cn } from "@/lib/utils/utils";
+import { Switch } from "@/components/ui/switch";
+import { revalidatePath } from "next/cache";
 
-export default function NewAccountDialog({
+export default function UpdateAccountDialog({
+  children,
+  data,
   accounts,
 }: {
+  children: React.ReactNode;
+  data: ChartOfAccountWithLevel;
   accounts: ChartOfAccountWithLevel[];
 }) {
   const router = useRouter();
   const { toast } = useToast();
   const [open, setOpen] = useState(false);
+  const parentAccount = useMemo(() => {
+    const findAccount = accounts.find((item) => item.id == data.parentId);
 
-  const form = useForm<z.infer<typeof newAccountSchema>>({
-    defaultValues: {
-      name: "",
-      code: "",
+    if (!findAccount) {
+      return {
+        name: null,
+        id: null,
+      };
+    }
+    return {
+      name: findAccount?.name,
+      id: findAccount?.id,
+    };
+  }, [data.parentId, accounts]);
+
+  const form = useForm<z.infer<typeof updateAccountSchema>>({
+    values: {
+      id: data.id!,
+      name: data.name,
+      code: data.code,
+      parent: parentAccount,
+      isActive: data.isActive!,
     },
-    resolver: zodResolver(newAccountSchema),
+    resolver: zodResolver(updateAccountSchema),
   });
 
   const parentOptions = useMemo(() => {
     return accounts.filter((item) => item.type == ChartOfAccountType.View);
   }, [accounts]);
 
-  const createAction = useAction(createChartOfAccountAction, {
+  const { execute } = useAction(updateChartOfAccountAction, {
     onSuccess: () => {
-      setOpen(false);
       form.reset();
+      setOpen(false);
       router.refresh();
       toast({
         title: "Success",
-        description: "Account created successfully",
+        description: "Account updated successfully",
         variant: "success",
         duration: 3000,
       });
@@ -83,24 +106,23 @@ export default function NewAccountDialog({
     onError: (error) => {
       toast({
         title: "Error",
-        description: "Account created failed",
+        description: "Account updated failed",
         variant: "destructive",
         duration: 3000,
       });
     },
+    onSettled: () => {
+      console.log("onSettled");
+    },
   });
 
-  function handleSubmit(values: z.infer<typeof newAccountSchema>) {
-    createAction.execute({ ...values });
+  function handleSubmit(values: z.infer<typeof updateAccountSchema>) {
+    execute({ ...values });
   }
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button className="w-full" size={"sm"}>
-          New Accounts
-        </Button>
-      </DialogTrigger>
+      <DialogTrigger asChild>{children ?? <span>Update</span>}</DialogTrigger>
       <DialogContent className="sm:min-w-40 ">
         <Form {...form}>
           <form
@@ -108,10 +130,9 @@ export default function NewAccountDialog({
             className="space-y-5"
           >
             <DialogHeader>
-              <DialogTitle>Add New Accounts</DialogTitle>
+              <DialogTitle>Update Chart of Account</DialogTitle>
             </DialogHeader>
             {/* Content Form */}
-            {/* <FormChartOfAccount form={form} parentOptions={parentOptions} /> */}
             <div className="flex flex-col space-y-2">
               <FormField
                 control={form.control}
@@ -201,6 +222,29 @@ export default function NewAccountDialog({
                       </PopoverContent>
                     </Popover>
                     <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="isActive"
+                render={({ field }) => (
+                  <FormItem className="flex flex-row items-center justify-between">
+                    <div className="space-y-0.5">
+                      <FormLabel className="text-base">
+                        Status Account
+                      </FormLabel>
+                      <FormDescription>
+                        If this account is inactive, it will not be shown
+                      </FormDescription>
+                      <FormMessage />
+                    </div>
+                    <FormControl>
+                      <Switch
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                      />
+                    </FormControl>
                   </FormItem>
                 )}
               />

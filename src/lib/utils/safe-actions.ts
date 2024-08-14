@@ -1,9 +1,21 @@
 import { auth } from "@/auth";
+import { companyRepository } from "@/repositories/core/company-rpository";
 import { url } from "inspector";
-import { createSafeActionClient } from "next-safe-action";
+import {
+  createSafeActionClient,
+  DEFAULT_SERVER_ERROR_MESSAGE,
+} from "next-safe-action";
 import { headers } from "next/headers";
 
-export const actionClient = createSafeActionClient().use(async ({ next }) => {
+export const actionClient = createSafeActionClient({
+  handleReturnedServerError(e) {
+    if (e instanceof Error) {
+      return e.message;
+    }
+
+    return DEFAULT_SERVER_ERROR_MESSAGE;
+  },
+}).use(async ({ next }) => {
   const header = headers();
   const url = header.get("Referer");
   const origin = header.get("Origin");
@@ -26,6 +38,16 @@ export const authActionClient = actionClient
       throw new Error("Session not found!");
     }
 
+    if (!companyCode) {
+      throw new Error("Company Code not found!");
+    }
+
+    const company = await companyRepository.findByCompanyCode(companyCode);
+
+    if (!company) {
+      throw new Error("Company not found!");
+    }
+
     // Return the next middleware with `userId` value in the context
-    return next({ ctx: { userId: session?.user.id, companyCode } });
+    return next({ ctx: { userId: session?.user.id, company } });
   });

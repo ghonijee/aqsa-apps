@@ -13,10 +13,8 @@ export const metadata: Metadata = {
 
 export default async function ChartOfAccountsPage({
   params,
-  searchParams,
 }: {
   params: { company: string };
-  searchParams: { [key: string]: string | string[] | undefined };
 }) {
   const paramsList: ListChartOfAccountParams = {
     pageSize: 0,
@@ -27,12 +25,12 @@ export default async function ChartOfAccountsPage({
 
   return (
     <ContentWrapper company={params.company} titlePage="Chart of Accounts">
-      <div className="px-6 py-5 h-full space-y-5 w-full scroll-mb-10">
-        <FilterAction accounts={data} />
-        <Suspense fallback={<DataTableLoading />} key={data.length}>
+      <Suspense fallback={<DataTableLoading />}>
+        <div className="px-6 py-5 h-full space-y-5 w-full scroll-mb-10">
+          <FilterAction accounts={data} />
           <TreeChartOfAccounts data={data} />
-        </Suspense>
-      </div>
+        </div>
+      </Suspense>
     </ContentWrapper>
   );
 }

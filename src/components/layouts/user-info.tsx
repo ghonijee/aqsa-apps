@@ -35,7 +35,6 @@ export default function UserInfo({ company, data, user }: UserInfoProps) {
 
   let companySelected;
   const { selected, onSelect } = useCompanyStore();
-  console.log("selected", selected);
 
   if (!selected) {
     companySelected = data.find((c) => c.code === company);
