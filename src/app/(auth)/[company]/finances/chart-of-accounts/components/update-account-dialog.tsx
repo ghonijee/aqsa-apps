@@ -66,13 +66,13 @@ export default function UpdateAccountDialog({
 
     if (!findAccount) {
       return {
-        name: null,
-        id: null,
+        name: "",
+        id: 0,
       };
     }
     return {
       name: findAccount?.name,
-      id: findAccount?.id,
+      id: findAccount?.id!,
     };
   }, [data.parentId, accounts]);
 
