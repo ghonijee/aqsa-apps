@@ -10,10 +10,12 @@ export async function up(db: Kysely<any>): Promise<void> {
     .addColumn("name", "varchar(255)", (col) => col.notNull())
     .addColumn("code", "varchar(255)", (col) => col.notNull())
     .addColumn("type", "varchar(255)")
+    .addColumn("normal_balance", "varchar(10)", (col) => col.notNull())
     .addColumn("is_active", "boolean", (col) => col.defaultTo(true))
     .addColumn("is_manageable", "boolean", (col) => col.defaultTo(true))
     .addColumn("created_at", "timestamp", (col) => col.defaultTo(sql`now()`))
     .addColumn("updated_at", "timestamp", (col) => col.defaultTo(sql`now()`))
+    .addColumn("deleted_at", "timestamp")
     .execute();
 
   // create migration for account-mutations.entity.ts table
@@ -29,6 +31,7 @@ export async function up(db: Kysely<any>): Promise<void> {
     .addColumn("date", "timestamp", (col) => col.notNull())
     .addColumn("created_at", "timestamp", (col) => col.defaultTo(sql`now()`))
     .addColumn("updated_at", "timestamp", (col) => col.defaultTo(sql`now()`))
+    .addColumn("deleted_at", "timestamp")
     .execute();
 }
 

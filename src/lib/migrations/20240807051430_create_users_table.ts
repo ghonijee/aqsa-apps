@@ -11,6 +11,8 @@ export async function up(db: Kysely<any>): Promise<void> {
     .addColumn("is_active", "boolean", (c) => c.defaultTo(true))
     .addColumn("image", "text")
     .addColumn("created_at", "timestamp", (c) => c.defaultTo(sql`now()`))
+    .addColumn("updated_at", "timestamp", (c) => c.defaultTo(sql`now()`))
+    .addColumn("deleted_at", "timestamp")
     .execute();
 }
 

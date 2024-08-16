@@ -52,10 +52,18 @@ export const nextAuthConfig = {
     signIn: "/sign-in",
   },
   callbacks: {
-    async authorized({ auth, request: { nextUrl } }) {
+    async authorized({ auth, request: { nextUrl, headers } }) {
       if (!auth) {
         return false;
       }
+
+      const [_, companyCode, moduleName, featureName] =
+        nextUrl.pathname.split("/");
+      const requestHeaders = new Headers(headers);
+      requestHeaders.set("X-Full-Path", nextUrl.pathname);
+      requestHeaders.set("X-Company-Code", companyCode);
+      requestHeaders.set("X-Module-Name", moduleName);
+      requestHeaders.set("X-Feature-Name", featureName);
 
       const companies = auth.user.companies;
 
@@ -74,7 +82,9 @@ export const nextAuthConfig = {
         );
       }
 
-      return true;
+      return NextResponse.next({
+        headers: requestHeaders,
+      });
     },
     async signIn({ user }) {
       if (!user) {

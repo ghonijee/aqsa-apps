@@ -1,3 +1,4 @@
+import { UserCompanyTable } from "./../../entities/core/user_company.entity";
 import { NewCompany } from "@/entities";
 import type { Kysely } from "kysely";
 
@@ -21,5 +22,22 @@ export async function seed(db: Kysely<any>): Promise<void> {
     },
   ];
 
-  await db.insertInto("companies").values(newCompany).execute();
+  const companyResult = await db
+    .insertInto("companies")
+    .values(newCompany)
+    .execute();
+
+  const users = await db.selectFrom("users").selectAll().execute();
+
+  for (const user of users) {
+    for (const company of companyResult) {
+      await db
+        .insertInto("userCompanies")
+        .values({
+          userId: user.id,
+          companyId: company.insertId,
+        })
+        .execute();
+    }
+  }
 }
