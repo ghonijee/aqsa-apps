@@ -9,14 +9,19 @@ export interface UserTable {
   isActive: boolean;
   image?: string | null | undefined;
   createdAt?: Date | null | undefined;
+  updatedAt?: Date | null | undefined;
+  deletedAt?: Date | null | undefined;
 }
 
-export type User = UserTable;
-export type NewUser = Omit<UserTable, "id" | "createdAt">;
+export type User = Omit<UserTable, "createdAt" | "deletedAt" | "updatedAt">;
+export type NewUser = Omit<
+  UserTable,
+  "id" | "createdAt" | "deletedAt" | "updatedAt"
+>;
 
 export type UserSession = Omit<
   UserTable,
-  "password" | "isActive" | "createdAt"
+  "password" | "isActive" | "createdAt" | "deletedAt" | "updatedAt"
 > & { companies: Company[] };
 
 export type ListUserResult = {
@@ -29,6 +34,6 @@ export type GetListUsersParams = {
   pageSize: number;
   search?: string;
   isActive?: boolean;
-  orderBy?: "name" | "email" | "username" | "createdAt";
+  orderBy?: "name" | "email" | "username" | "isActive" | "createdAt";
   orderDir?: "asc" | "desc";
 };

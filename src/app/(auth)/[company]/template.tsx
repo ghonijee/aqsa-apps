@@ -1,6 +1,4 @@
 import Sidebar from "@/components/layouts/sidebar";
-import TopBar from "@/components/layouts/topbar";
-import { headers } from "next/headers";
 
 export const metadata = {
   title: {
@@ -12,17 +10,17 @@ export const metadata = {
 
 export default function AppLayout({
   children,
-  params,
-}: {
+}: // params,
+{
   children: React.ReactNode;
-  params: { company: string };
 }) {
   return (
     <>
       <div className="flex h-screen max-h-screen min-h-screen">
-        <Sidebar company={params.company} />
+        <Sidebar />
 
         {/* Content */}
+
         <div className="w-full bg-base text-color-base">{children}</div>
       </div>
     </>

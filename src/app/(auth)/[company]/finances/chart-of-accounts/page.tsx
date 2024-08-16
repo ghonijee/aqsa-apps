@@ -6,6 +6,7 @@ import FilterAction from "./filter-action";
 import ContentWrapper from "@/components/layouts/content-wrapper";
 import { ListChartOfAccountParams } from "@/entities";
 import { getListChartOfAccountsAction } from "@/actions/chart_of_account/chart-of-account.action";
+import { ChartOfAccountsView } from ".";
 
 export const metadata: Metadata = {
   title: "Chart of Accounts",
@@ -21,15 +22,10 @@ export default async function ChartOfAccountsPage({
     companyCode: params.company,
   };
 
-  const data = await getListChartOfAccountsAction(paramsList);
-
   return (
     <ContentWrapper company={params.company} titlePage="Chart of Accounts">
       <Suspense fallback={<DataTableLoading />}>
-        <div className="px-6 py-5 h-full space-y-5 w-full scroll-mb-10">
-          <FilterAction accounts={data} />
-          <TreeChartOfAccounts data={data} />
-        </div>
+        <ChartOfAccountsView params={paramsList} />
       </Suspense>
     </ContentWrapper>
   );

@@ -63,8 +63,6 @@ export class ChartOfAccountRepository {
       .selectAll()
       .orderBy("ChartOfAccountWithLevel.code", "asc");
 
-    console.log(data.compile().sql);
-
     return await data.execute();
   }
 

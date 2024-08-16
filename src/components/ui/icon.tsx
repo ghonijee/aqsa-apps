@@ -1,18 +1,24 @@
 import dynamic from "next/dynamic";
-import { memo } from "react";
+import { memo, Suspense } from "react";
 import { LucideProps } from "lucide-react";
 import dynamicIconImports from "lucide-react/dynamicIconImports";
+
+const fallback = <div style={{ background: "#ddd", width: 20, height: 20 }} />;
 
 interface IconProps extends LucideProps {
   name: keyof typeof dynamicIconImports;
 }
 
-const Icon = memo(({ name, ...props }: IconProps) => {
+const DynamicIcon = memo(({ name, ...props }: IconProps) => {
   const LucideIcon = dynamic(dynamicIconImports[name]);
 
-  return <LucideIcon {...props} />;
+  return (
+    <Suspense fallback={fallback}>
+      <LucideIcon {...props} />
+    </Suspense>
+  );
 });
 
-Icon.displayName = "Icon";
+DynamicIcon.displayName = "Icon";
 
-export default Icon;
+export default DynamicIcon;

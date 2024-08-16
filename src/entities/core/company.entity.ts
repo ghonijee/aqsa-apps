@@ -5,12 +5,31 @@ export interface CompanyTable {
   email?: string;
   phoneNumber?: string;
   address?: string;
+  city?: string | null | undefined;
+  state?: string | null | undefined;
   isActive: boolean;
-  createdAt?: Date;
+  createdAt?: Date | null | undefined;
+  updatedAt?: Date | null | undefined;
+  deletedAt?: Date | null | undefined;
 }
 
-export type Company = CompanyTable;
-export type NewCompany = Omit<Company, "id" | "created_at">;
+export type Company = Omit<
+  CompanyTable,
+  "createdAt" | "deletedAt" | "updatedAt"
+>;
+export type NewCompany = Omit<
+  Company,
+  "id" | "createdAt" | "deletedAt" | "updatedAt"
+>;
+
+export type UpdateCompany = Partial<NewCompany>;
+
+export type FindCompanyParams = {
+  id?: number;
+  code?: string;
+  name?: string;
+  isActive?: boolean;
+};
 
 export type ListCompanyResult = {
   data: Company[];
@@ -21,6 +40,7 @@ export type GetListCompaniesParams = {
   page: number;
   pageSize: number;
   search?: string;
-  orderBy?: "name" | "code" | "created_at";
+  isActive?: boolean;
+  orderBy?: "name" | "code" | "createdAt" | "isActive";
   orderDir?: "asc" | "desc";
 };
