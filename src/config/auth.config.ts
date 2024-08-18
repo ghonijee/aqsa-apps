@@ -2,8 +2,8 @@ import { NextAuthConfig } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { PasswordCompare } from "../lib/utils/password.helper";
 import { authRepository } from "@/repositories/core/auth-repository";
-import getListCompaniesByUserIdAction from "@/actions/company/get-list-companies-by-user-id.action";
-import { NextRequest, NextResponse } from "next/server";
+import { getListCompaniesByUserIdAction } from "@/actions/company/company.action";
+import { NextResponse } from "next/server";
 
 const credentialsProvider = CredentialsProvider({
   name: "credentials",

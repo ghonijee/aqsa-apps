@@ -41,6 +41,6 @@ export type GetListCompaniesParams = {
   pageSize: number;
   search?: string;
   isActive?: boolean;
-  orderBy?: "name" | "code" | "createdAt" | "isActive";
+  orderBy?: "id" | "name" | "code" | "createdAt" | "isActive";
   orderDir?: "asc" | "desc";
 };

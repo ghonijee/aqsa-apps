@@ -1,11 +1,12 @@
-import DynamicIcon from "../components/ui/icon";
+import { LayoutDashboardIcon, SettingsIcon } from "lucide-react";
+// import DynamicIcon from "../components/ui/icon";
 import { AppModuleWithFeatureModules } from "@/entities";
 
 export const appModules: AppModuleWithFeatureModules[] = [
   {
     name: "Dashboard",
     defaultUrl: "/",
-    icon: <DynamicIcon name="layout-dashboard" size={20} />,
+    icon: <LayoutDashboardIcon size={20} />,
     featureModules: null,
   },
   // {
@@ -28,22 +29,22 @@ export const appModules: AppModuleWithFeatureModules[] = [
   {
     name: "Setting",
     defaultUrl: "/settings",
-    icon: <DynamicIcon name="settings" size={20} />,
+    icon: <SettingsIcon size={20} />,
     featureModules: [
       {
         name: "Home",
         defaultUrl: "/",
-        icon: <DynamicIcon name="house" size={20} />,
+        // icon: <DynamicIcon name="house" size={20} />,
       },
       {
         name: "Company",
         defaultUrl: "/companies",
-        icon: <DynamicIcon name="building-2" size={20} />,
+        // icon: <DynamicIcon name="building-2" size={20} />,
       },
       {
         name: "User",
         defaultUrl: "/users",
-        icon: <DynamicIcon name="user-round-cog" size={20} />,
+        // icon: <DynamicIcon name="user-round-cog" size={20} />,
       },
     ],
   },

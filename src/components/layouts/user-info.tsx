@@ -22,22 +22,23 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { signOut } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 interface UserInfoProps {
-  company: string;
   data: Company[];
   user: UserSession;
 }
 
-export default function UserInfo({ company, data, user }: UserInfoProps) {
+export default function UserInfo({ data, user }: UserInfoProps) {
   const router = useRouter();
+  const pathName = usePathname();
+  const [_, companyCode] = pathName?.split("/") ?? [];
 
   let companySelected;
   const { selected, onSelect } = useCompanyStore();
 
   if (!selected) {
-    companySelected = data.find((c) => c.code === company);
+    companySelected = data.find((c) => c.code === companyCode);
     onSelect(companySelected!);
   }
 
