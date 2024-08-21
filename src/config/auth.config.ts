@@ -2,8 +2,8 @@ import { NextAuthConfig } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { PasswordCompare } from "../lib/utils/password.helper";
 import { authRepository } from "@/repositories/core/auth-repository";
-import { getListCompaniesByUserIdAction } from "@/actions/company/company.action";
 import { NextResponse } from "next/server";
+import { companyRepository } from "@/repositories/core/company-repository";
 
 const credentialsProvider = CredentialsProvider({
   name: "credentials",
@@ -27,9 +27,7 @@ const credentialsProvider = CredentialsProvider({
       return null;
     }
 
-    const companies = await getListCompaniesByUserIdAction(
-      user.id?.toString()!
-    );
+    const companies = await companyRepository.findByUserId(user.id!);
 
     if (companies.length === 0) {
       return null;
@@ -91,7 +89,7 @@ export const nextAuthConfig = {
         return false;
       }
 
-      const companies = await getListCompaniesByUserIdAction(user.id!);
+      const companies = await companyRepository.findByUserId(Number(user.id!));
 
       if (companies.length === 0) {
         return false;

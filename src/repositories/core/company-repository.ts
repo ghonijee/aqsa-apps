@@ -1,5 +1,12 @@
-import { Company, GetListCompaniesParams } from "@/entities";
+import {
+  Company,
+  GetListCompaniesParams,
+  NewCompany,
+  UpdateCompany,
+} from "@/entities";
 import { DatabaseConnection, db } from "@/lib/database/db";
+import { InsertResult, UpdateResult } from "kysely";
+import { create } from "zustand";
 
 export class CompanyRepository {
   protected db: DatabaseConnection;
@@ -12,7 +19,7 @@ export class CompanyRepository {
     page = 1,
     pageSize = 10,
     search = "",
-    isActive = true,
+    isActive = undefined,
     orderBy = "id",
     orderDir = "asc",
   }: GetListCompaniesParams): Promise<Company[]> {
@@ -30,7 +37,10 @@ export class CompanyRepository {
           ])
         )
       )
-      .where("companies.isActive", "=", isActive)
+      .$if(isActive !== undefined && isActive !== null, (qb) =>
+        qb.where("companies.isActive", "=", isActive!)
+      )
+      .where("companies.deletedAt", "is", null)
       .orderBy(orderBy, orderDir)
       .limit(pageSize)
       .offset((page - 1) * pageSize)
@@ -45,6 +55,7 @@ export class CompanyRepository {
       .innerJoin("userCompanies", "companies.id", "userCompanies.companyId")
       .selectAll()
       .where("userCompanies.userId", "=", userId)
+      .where("companies.deletedAt", "is", null)
       .execute();
 
     return companies;
@@ -54,9 +65,39 @@ export class CompanyRepository {
       .selectFrom("companies")
       .selectAll()
       .where("companies.code", "=", code)
+      .where("companies.deletedAt", "is", null)
       .executeTakeFirst();
 
     return companies ?? null;
+  }
+
+  async create(data: NewCompany): Promise<InsertResult> {
+    const result = await this.db
+      .insertInto("companies")
+      .values(data)
+      .executeTakeFirstOrThrow();
+
+    return result;
+  }
+
+  async update(id: number, data: UpdateCompany): Promise<UpdateResult> {
+    const result = await this.db
+      .updateTable("companies")
+      .set(data)
+      .where("id", "=", id)
+      .executeTakeFirstOrThrow();
+
+    return result;
+  }
+
+  async delete(id: number): Promise<UpdateResult> {
+    const result = await this.db
+      .updateTable("companies")
+      .set({ deletedAt: new Date() })
+      .where("id", "=", id)
+      .executeTakeFirstOrThrow();
+
+    return result;
   }
 }
 

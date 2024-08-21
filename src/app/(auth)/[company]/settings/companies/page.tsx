@@ -1,8 +1,8 @@
 import ContentWrapper from "@/components/layouts/content-wrapper";
 import { Suspense } from "react";
-import { CompaniesView } from "../../../../../screens/company/companies-view";
 import ContentViewLoading from "@/components/loading/content-view-loading";
 import { GetListCompaniesParams } from "@/entities";
+import { CompaniesView } from "@/components/screens/company/companies-view";
 
 export default function CompaniesPage({
   searchParams,

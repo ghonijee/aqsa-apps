@@ -2,7 +2,7 @@
 
 import { useDebouncedCallback } from "use-debounce";
 import { Company } from "@/entities";
-import FilterTable from "./filter-table";
+import FilterActionTable from "./filter-table";
 import {
   flexRender,
   getCoreRowModel,
@@ -22,6 +22,9 @@ import {
 } from "@/components/ui/table";
 import { ArchiveX } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useAction } from "next-safe-action/hooks";
+import { deleteCompanyAction } from "@/actions/company/company.action";
+import { useToast } from "@/components/ui/use-toast";
 
 export default function CompanyTableView({ data }: { data: Company[] }) {
   const [rowSelection, setRowSelection] = useState({});
@@ -32,10 +35,35 @@ export default function CompanyTableView({ data }: { data: Company[] }) {
   const [globalFilter, setGlobalFilter] = useState(
     searchParams.get("search") || ""
   );
+  const { toast } = useToast();
 
-  const resetFilter = useDebouncedCallback(() => {
+  const resetFilter = () => {
     setGlobalFilter("");
-  }, 500);
+  };
+
+  const deleteAction = useAction(deleteCompanyAction, {
+    onSuccess: () => {
+      router.refresh();
+      toast({
+        variant: "success",
+        title: "Success",
+        description: "Company deleted successfully",
+        duration: 2000,
+      });
+    },
+    onError: () => {
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "Failed to delete company",
+        duration: 2000,
+      });
+    },
+  });
+
+  const onDelete = async (data: Company) => {
+    await deleteAction.executeAsync({ id: data.id! });
+  };
 
   const table = useReactTable({
     data,
@@ -53,6 +81,7 @@ export default function CompanyTableView({ data }: { data: Company[] }) {
     },
     meta: {
       resetFilter,
+      handleDeletedata: onDelete,
     },
   });
 
@@ -66,11 +95,11 @@ export default function CompanyTableView({ data }: { data: Company[] }) {
       table.resetGlobalFilter();
     }
     router.replace(`${pathname}?${params.toString()}`);
-  }, [globalFilter]);
+  }, [globalFilter, pathname, router, searchParams, table]);
 
   return (
     <div className="flex flex-col gap-y-5">
-      <FilterTable table={table} />
+      <FilterActionTable table={table} />
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (

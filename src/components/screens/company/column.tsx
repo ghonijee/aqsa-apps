@@ -5,6 +5,7 @@ import { Status } from "@/components/ui/status";
 import { Company } from "@/entities";
 import { ColumnDef, RowData } from "@tanstack/react-table";
 import { PencilLine, Trash2 } from "lucide-react";
+import UpdateCompanyDialog from "./update-company-dialog";
 
 export const companyColums: ColumnDef<Company>[] = [
   {
@@ -56,9 +57,16 @@ export const companyColums: ColumnDef<Company>[] = [
     accessorKey: "isActive",
     header: "Status",
     cell: (info) => {
-      return <Status value={info.getValue() as boolean} />;
+      return (
+        <div className="text-center">
+          <Status value={info.getValue() as boolean} />
+        </div>
+      );
     },
-    size: 40,
+    meta: {
+      headerStyle: "text-center",
+    },
+    size: 60,
   },
   {
     header: "Actions",
@@ -69,13 +77,11 @@ export const companyColums: ColumnDef<Company>[] = [
     cell: (info) => {
       return (
         <div className="flex justify-end">
-          {/* <UpdateAccountDialog data={item} accounts={data} key={item.id}> */}
-          <Button variant="ghost" size="icon">
-            <PencilLine size={18} className=" text-amber-500" />
-          </Button>
-          {/* </UpdateAccountDialog> */}
+          <UpdateCompanyDialog company={info.row.original} />
+
           <AlertDelete
             handleOnDelete={() => {
+              info.table.options.meta?.handleDeletedata?.(info.row.original);
               // deleteAction.execute({ id: item.id! });
             }}
           >

@@ -11,8 +11,6 @@ export async function CompaniesView({
 }: GetListCompaniesParams) {
   let data: Company[];
 
-  // cretae delay for demo
-  await new Promise((resolve) => setTimeout(resolve, 3000));
   const params: GetListCompaniesParams = {
     page: Number(page) || 1,
     pageSize: Number(pageSize) || 10,

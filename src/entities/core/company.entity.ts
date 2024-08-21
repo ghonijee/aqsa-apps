@@ -22,7 +22,7 @@ export type NewCompany = Omit<
   "id" | "createdAt" | "deletedAt" | "updatedAt"
 >;
 
-export type UpdateCompany = Partial<NewCompany>;
+export type UpdateCompany = Partial<CompanyTable>;
 
 export type FindCompanyParams = {
   id?: number;

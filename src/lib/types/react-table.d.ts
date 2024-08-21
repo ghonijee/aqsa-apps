@@ -5,6 +5,7 @@ declare module "@tanstack/react-table" {
   interface TableMeta<TData extends RowData> {
     // updateData: (rowIndex: number, columnId: string, value: unknown) => void;
     resetFilter: () => void;
+    handleDeletedata?: (row: TData) => void;
   }
   interface ColumnMeta<TData extends RowData, TValue> {
     headerStyle: string;
