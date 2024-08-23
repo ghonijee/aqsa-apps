@@ -22,10 +22,9 @@ export class CompanyRepository {
     isActive = undefined,
     orderBy = "id",
     orderDir = "asc",
-  }: GetListCompaniesParams): Promise<Company[]> {
-    const companies = await this.db
+  }: GetListCompaniesParams): Promise<{ data: Company[]; totalData: number }> {
+    const query = this.db
       .selectFrom("companies")
-      .selectAll()
       .$if(search !== "" && search !== undefined, (qb) =>
         qb.where((wb) =>
           wb.or([
@@ -40,13 +39,23 @@ export class CompanyRepository {
       .$if(isActive !== undefined && isActive !== null, (qb) =>
         qb.where("companies.isActive", "=", isActive!)
       )
-      .where("companies.deletedAt", "is", null)
+      .where("companies.deletedAt", "is", null);
+
+    const data = await query
+      .selectAll()
       .orderBy(orderBy, orderDir)
       .limit(pageSize)
       .offset((page - 1) * pageSize)
       .execute();
 
-    return companies;
+    const resultTotal = await query
+      .select((qb) => qb.fn.count("companies.id").as("totalData"))
+      .executeTakeFirst();
+
+    return {
+      data,
+      totalData: resultTotal!.totalData as number,
+    };
   }
 
   async findByUserId(userId: number): Promise<Company[]> {

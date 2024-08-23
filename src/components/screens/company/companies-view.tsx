@@ -9,7 +9,7 @@ export async function CompaniesView({
   page,
   pageSize,
 }: GetListCompaniesParams) {
-  let data: Company[];
+  let result: { data: Company[]; totalData: number };
 
   const params: GetListCompaniesParams = {
     page: Number(page) || 1,
@@ -18,11 +18,15 @@ export async function CompaniesView({
     orderBy: orderBy || "id",
     orderDir: orderDir || "asc",
   };
-  data = await getAllCompaniesAction(params);
+  result = await getAllCompaniesAction(params);
 
   return (
     <div className="px-6 py-5 h-full w-full scroll-mb-10">
-      <CompanyTableView data={data} />
+      <CompanyTableView
+        data={result.data}
+        totalData={result.totalData}
+        param={params}
+      />
     </div>
   );
 }

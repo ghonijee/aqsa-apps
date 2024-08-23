@@ -11,7 +11,7 @@ import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { Control } from "react-hook-form";
 
-export default function FormContent({
+export default function FormContent<T>({
   control,
 }: {
   control: Control<

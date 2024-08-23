@@ -1,12 +1,13 @@
 "use client";
 
 import { useDebouncedCallback } from "use-debounce";
-import { Company } from "@/entities";
+import { Company, GetListCompaniesParams } from "@/entities";
 import FilterActionTable from "./filter-table";
 import {
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
+  PaginationState,
   useReactTable,
   VisibilityState,
 } from "@tanstack/react-table";
@@ -25,8 +26,17 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useAction } from "next-safe-action/hooks";
 import { deleteCompanyAction } from "@/actions/company/company.action";
 import { useToast } from "@/components/ui/use-toast";
+import { DataTablePagination } from "@/components/table/table-pagination";
 
-export default function CompanyTableView({ data }: { data: Company[] }) {
+export default function CompanyTableView({
+  data,
+  totalData,
+  param,
+}: {
+  data: Company[];
+  totalData: number;
+  param: GetListCompaniesParams;
+}) {
   const [rowSelection, setRowSelection] = useState({});
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const searchParams = useSearchParams();
@@ -35,6 +45,10 @@ export default function CompanyTableView({ data }: { data: Company[] }) {
   const [globalFilter, setGlobalFilter] = useState(
     searchParams.get("search") || ""
   );
+  const [pagination, setPagination] = useState<PaginationState>({
+    pageIndex: param.page - 1,
+    pageSize: param.pageSize,
+  });
   const { toast } = useToast();
 
   const resetFilter = () => {
@@ -74,10 +88,15 @@ export default function CompanyTableView({ data }: { data: Company[] }) {
     onRowSelectionChange: setRowSelection,
     onColumnVisibilityChange: setColumnVisibility,
     onGlobalFilterChange: setGlobalFilter,
+    manualPagination: true,
+    manualFiltering: true,
+    rowCount: totalData,
+    onPaginationChange: setPagination,
     state: {
       rowSelection,
       columnVisibility,
       globalFilter,
+      pagination,
     },
     meta: {
       resetFilter,
@@ -94,8 +113,11 @@ export default function CompanyTableView({ data }: { data: Company[] }) {
       params.delete("search");
       table.resetGlobalFilter();
     }
+
+    params.set("page", pagination.pageIndex + 1 + "");
+    params.set("pageSize", pagination.pageSize + "");
     router.replace(`${pathname}?${params.toString()}`);
-  }, [globalFilter, pathname, router, searchParams, table]);
+  }, [globalFilter, pathname, router, searchParams, table, pagination]);
 
   return (
     <div className="flex flex-col gap-y-5">
@@ -155,6 +177,7 @@ export default function CompanyTableView({ data }: { data: Company[] }) {
           )}
         </TableBody>
       </Table>
+      <div className="py-4 px-5">{<DataTablePagination table={table} />}</div>
     </div>
   );
 }

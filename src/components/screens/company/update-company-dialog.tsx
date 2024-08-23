@@ -56,7 +56,7 @@ export default function UpdateCompanyDialog({ company }: { company: Company }) {
       toast({
         variant: "destructive",
         title: "Error",
-        description: "Failed to update company " + error.serverError,
+        description: "Failed to update company",
         duration: 2000,
       });
     },
