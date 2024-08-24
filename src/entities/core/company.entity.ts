@@ -40,7 +40,7 @@ export type GetListCompaniesParams = {
   page: number;
   pageSize: number;
   search?: string;
-  isActive?: boolean;
+  status?: string;
   orderBy?: "id" | "name" | "code" | "createdAt" | "isActive";
   orderDir?: "asc" | "desc";
 };

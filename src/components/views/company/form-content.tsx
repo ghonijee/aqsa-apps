@@ -14,19 +14,7 @@ import { Control } from "react-hook-form";
 export default function FormContent<T>({
   control,
 }: {
-  control: Control<
-    {
-      name: string;
-      address: string;
-      code: string;
-      email: string;
-      phoneNumber: string;
-      isActive: boolean;
-      city?: string | undefined;
-      state?: string | undefined;
-    },
-    any
-  >;
+  control: Control<any, any>;
 }) {
   return (
     <div className="flex flex-col gap-y-2">

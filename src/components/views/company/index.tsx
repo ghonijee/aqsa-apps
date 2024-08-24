@@ -5,6 +5,7 @@ import CompanyTableView from "./table-view";
 export async function CompaniesView({
   search,
   orderBy,
+  status,
   orderDir,
   page,
   pageSize,
@@ -14,6 +15,7 @@ export async function CompaniesView({
   const params: GetListCompaniesParams = {
     page: Number(page) || 1,
     pageSize: Number(pageSize) || 10,
+    status: status || undefined,
     search: search || undefined,
     orderBy: orderBy || "id",
     orderDir: orderDir || "asc",

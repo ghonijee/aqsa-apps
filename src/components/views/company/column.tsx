@@ -54,6 +54,7 @@ export const companyColums: ColumnDef<Company>[] = [
     size: 350,
   },
   {
+    id: "status",
     accessorKey: "isActive",
     header: "Status",
     cell: (info) => {

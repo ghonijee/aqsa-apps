@@ -19,7 +19,7 @@ export class CompanyRepository {
     page = 1,
     pageSize = 10,
     search = "",
-    isActive = undefined,
+    status = undefined,
     orderBy = "id",
     orderDir = "asc",
   }: GetListCompaniesParams): Promise<{ data: Company[]; totalData: number }> {
@@ -36,9 +36,10 @@ export class CompanyRepository {
           ])
         )
       )
-      .$if(isActive !== undefined && isActive !== null, (qb) =>
-        qb.where("companies.isActive", "=", isActive!)
-      )
+      .$if(status !== undefined && status !== null, (qb) => {
+        const isActive = status === "active" ? true : false;
+        return qb.where("companies.isActive", "=", isActive);
+      })
       .where("companies.deletedAt", "is", null);
 
     const data = await query
@@ -104,6 +105,16 @@ export class CompanyRepository {
       .updateTable("companies")
       .set({ deletedAt: new Date() })
       .where("id", "=", id)
+      .executeTakeFirstOrThrow();
+
+    return result;
+  }
+
+  async batchDelete(ids: number[]): Promise<UpdateResult> {
+    const result = await this.db
+      .updateTable("companies")
+      .set({ deletedAt: new Date() })
+      .where("id", "in", ids)
       .executeTakeFirstOrThrow();
 
     return result;

@@ -84,11 +84,15 @@ export const updateCompanyAction = authActionClient
 export const deleteCompanyAction = authActionClient
   .schema(
     z.object({
-      id: z.number(),
+      id: z.number().or(z.array(z.number())),
     })
   )
   .action(async ({ parsedInput, ctx }) => {
-    await companyRepository.delete(parsedInput.id);
+    if (Array.isArray(parsedInput.id)) {
+      await companyRepository.batchDelete(parsedInput.id);
+    } else {
+      await companyRepository.delete(parsedInput.id);
+    }
     return {
       data: null,
       error: "",

@@ -20,7 +20,7 @@ export function ColumnVisibility<T>({ table }: { table: Table<T> }) {
           </p>
         </div>
 
-        <div className="flex flex-col p-4 space-y-2 max-h-[352px] overflow-auto">
+        <div className="flex flex-col p-4 space-y-4 max-h-[352px] overflow-auto">
           {table
             .getAllColumns()
             .filter((column: Column<T>) =>
@@ -28,7 +28,7 @@ export function ColumnVisibility<T>({ table }: { table: Table<T> }) {
             )
             .map((column: any) => {
               return (
-                <div key={column.id} className="flex items-center space-x-2">
+                <div key={column.id} className="flex items-center space-x-4">
                   <Checkbox
                     id={column.id}
                     checked={column.getIsVisible()}

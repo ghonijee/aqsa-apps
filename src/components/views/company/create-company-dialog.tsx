@@ -69,9 +69,7 @@ export default function CreateCompanyDialog() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant={"default"} size={"default"}>
-          Add Company
-        </Button>
+        <Button variant={"default"}>Add Company</Button>
       </DialogTrigger>
       <DialogContent>
         <Form {...form}>
