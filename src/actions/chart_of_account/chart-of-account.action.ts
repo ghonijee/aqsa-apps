@@ -14,7 +14,6 @@ import {
   newAccountSchema,
   updateAccountSchema,
 } from "@/schemas/chart-of-account.schema";
-import { companyRepository } from "@/repositories/core/company-rpository";
 
 export const getListChartOfAccountsAction = cache(
   async (params: ListChartOfAccountParams) => {

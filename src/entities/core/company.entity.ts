@@ -22,7 +22,7 @@ export type NewCompany = Omit<
   "id" | "createdAt" | "deletedAt" | "updatedAt"
 >;
 
-export type UpdateCompany = Partial<NewCompany>;
+export type UpdateCompany = Partial<CompanyTable>;
 
 export type FindCompanyParams = {
   id?: number;
@@ -40,7 +40,7 @@ export type GetListCompaniesParams = {
   page: number;
   pageSize: number;
   search?: string;
-  isActive?: boolean;
-  orderBy?: "name" | "code" | "createdAt" | "isActive";
+  status?: string;
+  orderBy?: "id" | "name" | "code" | "createdAt" | "isActive";
   orderDir?: "asc" | "desc";
 };

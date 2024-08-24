@@ -23,7 +23,7 @@ export default async function ChartOfAccountsPage({
   };
 
   return (
-    <ContentWrapper company={params.company} titlePage="Chart of Accounts">
+    <ContentWrapper titlePage="Chart of Accounts">
       <Suspense fallback={<DataTableLoading />}>
         <ChartOfAccountsView params={paramsList} />
       </Suspense>

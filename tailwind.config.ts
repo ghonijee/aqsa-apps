@@ -25,9 +25,9 @@ const config: Config = {
         "neutral-100-alpha": "rgba(0, 0, 0, 0.08)",
         "neutral-200-alpha": "rgba(0, 0, 0, 0.16)",
         "neutral-300-alpha": "rgba(0, 0, 0, 0.22)",
-        "primary-100-alpha": "rgba(50, 70, 255, 0.08)",
-        "primary-200-alpha": "rgba(50, 70, 255, 0.16)",
-        "primary-300-alpha": "rgba(50, 70, 255, 0.22)",
+        "primary-100-alpha": "rgba(51, 72, 255, 0.08)",
+        "primary-200-alpha": "rgba(51, 72, 255, 0.16)",
+        "primary-300-alpha": "rgba(51, 72, 255, 0.22)",
         neutral: {
           0: "#FFFFFF",
         },

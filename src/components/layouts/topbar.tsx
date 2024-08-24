@@ -1,13 +1,7 @@
 import { auth } from "@/auth";
 import UserInfo from "./user-info";
 
-export default async function TopBar({
-  company,
-  titlePage,
-}: {
-  company: string;
-  titlePage?: string;
-}) {
+export default async function TopBar({ titlePage }: { titlePage?: string }) {
   const session = await auth();
   const user = session?.user;
   const listCompanies = session?.user.companies || [];
@@ -17,7 +11,7 @@ export default async function TopBar({
       {titlePage && (
         <h1 className="text-color-base font-bold text-base">{titlePage}</h1>
       )}
-      <UserInfo data={listCompanies} company={company} user={user!} />
+      <UserInfo data={listCompanies} user={user!} />
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import { auth } from "@/auth";
-import { companyRepository } from "@/repositories/core/company-rpository";
+import { companyRepository } from "@/repositories/core/company-repository";
 import { url } from "inspector";
 import {
   createSafeActionClient,
